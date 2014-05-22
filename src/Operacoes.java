@@ -1,3 +1,5 @@
+import java.util.Stack;
+
 import Exception.InvalidExpressionException;
 
 public class Operacoes {
@@ -8,6 +10,20 @@ public class Operacoes {
 	public static String converteExpressaoFixadaEmPosFixada(String expressao)
 			throws InvalidExpressionException {
 		verificaExpressaoFixada(expressao);
+		char finalExpressao = 'F';
+		Stack<Character> pilha = new Stack<>();
+		pilha.push(finalExpressao);
+		
+		StringBuilder expressaoPosFixada = new StringBuilder();
+
+		for (char posicao : expressao.toCharArray()) {
+			if (posicao == '(' || posicao == ')' || posicao == '+'
+					|| posicao == '-' || posicao == '*' || posicao == '/') {
+				pilha.push(posicao);
+			}else if(){
+				expressaoPosFixada.append(posicao);
+			}
+		}
 
 		if ("(1+2)/(2-1)".equals(expressao)) {
 			return "12+21-/";
@@ -20,13 +36,14 @@ public class Operacoes {
 			throws InvalidExpressionException {
 		for (char posicao : expressao.toCharArray()) {
 			if (posicao != '+' && posicao != '-' && posicao != '*'
-					&& posicao != '/' && posicao != '(' && posicao != ')' && posicao < '0' || posicao > '9') {
+					&& posicao != '/' && posicao != '(' && posicao != ')'
+					&& posicao < '0' || posicao > '9') {
 				throw new InvalidExpressionException(
 						"Expressao de entrada invalida!");
 			}
 		}
 	}
-	
+
 	public static double calculaResultadoDeExpressaoPosFixada(String expressao)
 			throws InvalidExpressionException {
 
