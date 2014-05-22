@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Stack;
 
 import Exception.InvalidExpressionException;
@@ -13,23 +15,36 @@ public class Operacoes {
 		char finalExpressao = 'F';
 		Stack<Character> pilha = new Stack<>();
 		pilha.push(finalExpressao);
-		
-		StringBuilder expressaoPosFixada = new StringBuilder();
+
+		List<Character> expressaoPosFixada = new ArrayList<Character>();
+		int contador = 0;
 
 		for (char posicao : expressao.toCharArray()) {
 			if (posicao == '(' || posicao == ')' || posicao == '+'
 					|| posicao == '-' || posicao == '*' || posicao == '/') {
 				pilha.push(posicao);
-			}else if(){
-				expressaoPosFixada.append(posicao);
+			} else {
+				expressaoPosFixada.add(posicao);
+				contador++;
+			}
+
+			if ((expressaoPosFixada.size() > 2)
+					&& (expressaoPosFixada[contador] >= 0 || expressaoPosFixada[contador] <= 9)
+					&& (expressaoPosFixada[contador - 1] >= 0)
+					|| expressaoPosFixada[contador - 1] <= 9) {
+				contador++;
+				expressaoPosFixada.add(pilha.pop());
 			}
 		}
 
-		if ("(1+2)/(2-1)".equals(expressao)) {
-			return "12+21-/";
-		} else {
-			return "42-21+*";
-		}
+		String retorno = expressaoPosFixada.toString();
+		return retorno;
+
+		// if ("(1+2)/(2-1)".equals(expressao)) {
+		// return "12+21-/";
+		// } else {
+		// return "42-21+*";
+		// }
 	}
 
 	private static void verificaExpressaoFixada(String expressao)
